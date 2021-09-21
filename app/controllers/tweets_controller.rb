@@ -8,4 +8,17 @@ class TweetsController < ApplicationController
     @tweet = Tweet.new
   end
 
+  def create
+    Tweet.create(tweet_params) # privateメソッドの呼び出し
+  end
+
+  private
+  def tweet_params
+    params.require(:tweet).permit(:name, :image, :text)
+    # railsのアプリケーションにおいてデータの保存や変更を行う際には、ストロングパラメータを用いることが定石。
+    # ストロングパラメータ → params.require().permit()で、特定のキーを受け取るように制限。
+    # requireメソッドは、どの情報を取得するか選択する。ストロングパラメーターとして利用する場合は、主にモデル名を指定する。
+    # permitメソッドは、取得したいキーを指定でき、指定したキーと値のセットのみを取得する。
+  end
+  
 end
