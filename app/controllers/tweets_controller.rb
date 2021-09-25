@@ -26,6 +26,10 @@ class TweetsController < ApplicationController
     tweet.update(tweet_params)        # データベースへのアップデート処理
   end
 
+  def show
+    @tweet = Tweet.find(params[:id])    # ビューファイルで使用する為、インスタンス変数に代入している。
+  end
+
   private
   def tweet_params
     params.require(:tweet).permit(:name, :image, :text)
