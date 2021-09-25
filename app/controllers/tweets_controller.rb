@@ -21,6 +21,11 @@ class TweetsController < ApplicationController
     @tweet = Tweet.find(params[:id])  # find = 探す
   end
 
+  def update
+    tweet = Tweet.find(params[:id])   # ビューファイルにツイート情報を渡す必要がないため、インスタンス変数は使用しない。
+    tweet.update(tweet_params)        # データベースへのアップデート処理
+  end
+
   private
   def tweet_params
     params.require(:tweet).permit(:name, :image, :text)
