@@ -5,6 +5,9 @@
         <span><%= image_tag "arrow_top.png" %></span>
         <ul class="more_list">
           <li>
+            <%= link_to '詳細', tweet_path(tweet.id), method: :get %>       <!-- tweet_pathは削除機能と同じPrefixのためlink_toメソッドなどでリンクを指定するときは、HTTPメソッドを定義する -->
+          </li>
+          <li>
             <%= link_to '編集', edit_tweet_path(tweet.id), method: :get %>
           </li>
           <li>
