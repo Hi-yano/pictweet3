@@ -3,7 +3,8 @@ class TweetsController < ApplicationController
   before_action :move_to_index, except: [:index, :show]
 
   def index
-    @tweets = Tweet.all    # 「@」月のものはインスタンス変数。インスタンス変数の値は、コントローラとビューで共有される。
+    @tweets = Tweet.includes(:user)    # 「@」月のものはインスタンス変数。インスタンス変数の値は、コントローラとビューで共有される。
+    # includesメソッドを使うとすべてのレコードを取得する。N+1問題回避のため。
   end
 
   def new
@@ -32,11 +33,14 @@ class TweetsController < ApplicationController
 
   private
   def tweet_params
-    params.require(:tweet).permit(:name, :image, :text)
+    params.require(:tweet).permit(:image, :text).merge(user_id: current_user.id)
     # railsのアプリケーションにおいてデータの保存や変更を行う際には、ストロングパラメータを用いることが定石。
     # ストロングパラメータ → params.require().permit()で、特定のキーを受け取るように制限。
     # requireメソッドは、どの情報を取得するか選択する。ストロングパラメーターとして利用する場合は、主にモデル名を指定する。
     # permitメソッドは、取得したいキーを指定でき、指定したキーと値のセットのみを取得する。
+
+    # current_userメソッドは現在ログインしているユーザの情報を取得できる。deviseを導入している為使用できるメソッド。
+    # current_userのidをmergeメソッドで統合している。mergeメソッドはハッシュを統合させるためのRubyのメソッド。
   end
 
   def set_tweet
