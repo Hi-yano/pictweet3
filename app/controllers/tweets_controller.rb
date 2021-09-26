@@ -33,7 +33,7 @@ class TweetsController < ApplicationController
 
   private
   def tweet_params
-    params.require(:tweet).permit(:name, :image, :text).merge(user_id: current_user.id)
+    params.require(:tweet).permit(:image, :text).merge(user_id: current_user.id)
     # railsのアプリケーションにおいてデータの保存や変更を行う際には、ストロングパラメータを用いることが定石。
     # ストロングパラメータ → params.require().permit()で、特定のキーを受け取るように制限。
     # requireメソッドは、どの情報を取得するか選択する。ストロングパラメーターとして利用する場合は、主にモデル名を指定する。
