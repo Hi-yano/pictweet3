@@ -1,6 +1,7 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: [:edit, :show]  # resourcesと同様にonlyやexceptなどのオプションを使用することによって、どのアクションの実行前に処理を実行させるかなどの制限が可能になる
-  
+  before_action :move_to_index, except: [:index, :show]
+
   def index
     @tweets = Tweet.all    # 「@」月のものはインスタンス変数。インスタンス変数の値は、コントローラとビューで共有される。
   end
@@ -42,6 +43,12 @@ class TweetsController < ApplicationController
     @tweet = Tweet.find(params[:id])  # ビューファイルで使用する為、インスタンス変数に代入している。find = 「探す」
     # editアクションとshowアクションが実行される前に、set_tweetが実行される。
     # before_actionを用いることで重複した記述を一つにまとめることができる。
+  end
+
+  def move_to_index
+    unless user_signed_in?
+      redirect_to action: :index
+    end
   end
   
 end
