@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root to: 'tweets#index'
   resources :tweets do  #, only: [:index, :new, :create, :destroy, :edit, :update, :show]   # 7つのアクションを記述した場合はonlyオプションは不要になる。
     resources :comments, only: :create  # ルーティングにネストを使用しなければ、モデルと結びついている別モデルのid情報が送れなくなる。ルーティングをネストさせる一番の理由は、レコードのidをparamsに追加してコントローラに送るため。
-    collection do   # collectionを使用すると、生成されるルーティングのURLと実行されるコントローラを任意にカスタムできる。（似たものにmemberがある）
+    collection do   # collectionを使用すると、生成されるルーティングのURLと実行されるコントローラを任意にカスタムできる。（似たものにmemberがある）後で調べる。
       get 'search'
     end
   end
