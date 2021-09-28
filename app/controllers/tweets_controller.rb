@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: [:edit, :show]  # resourcesと同様にonlyやexceptなどのオプションを使用することによって、どのアクションの実行前に処理を実行させるかなどの制限が可能になる
-  before_action :move_to_index, except: [:index, :show]
+  before_action :move_to_index, except: [:index, :show, :search]
 
   def index
     @tweets = Tweet.includes(:user).order("created_at DESC")    # 「@」月のものはインスタンス変数。インスタンス変数の値は、コントローラとビューで共有される。
@@ -32,6 +32,10 @@ class TweetsController < ApplicationController
     @comment = Comment.new
     @comments = @tweet.comments.includes(:user) # includesメソッドでN+1問題を解決
     # tweetsテーブルとcommetsテーブルはアソシエーションが組まれているので、@tweet.commentsとすることで@tweetへ投稿されたすべてのコメントを取得できる。
+  end
+
+  def search
+    @tweets = Tweet.search(params[:keyword])
   end
 
   private
