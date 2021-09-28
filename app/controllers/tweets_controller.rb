@@ -3,7 +3,7 @@ class TweetsController < ApplicationController
   before_action :move_to_index, except: [:index, :show]
 
   def index
-    @tweets = Tweet.includes(:user)    # 「@」月のものはインスタンス変数。インスタンス変数の値は、コントローラとビューで共有される。
+    @tweets = Tweet.includes(:user).order("created_at DESC")    # 「@」月のものはインスタンス変数。インスタンス変数の値は、コントローラとビューで共有される。
     # includesメソッドを使うとすべてのレコードを取得する。N+1問題回避のため。
   end
 
