@@ -29,6 +29,9 @@ class TweetsController < ApplicationController
   end
 
   def show
+    @comment = Comment.new
+    @comments = @tweet.comments.includes(:user) # includesメソッドでN+1問題を解決
+    # tweetsテーブルとcommetsテーブルはアソシエーションが組まれているので、@tweet.commentsとすることで@tweetへ投稿されたすべてのコメントを取得できる。
   end
 
   private
